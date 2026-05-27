@@ -45,11 +45,12 @@ DeviceFileEvents
 Searched the DeviceProcessEvents table for any ProcessCommandLine that contained the string “"tor-browser-windows". Based on the logs returned, at May 26, 2026 1:34:36 PM the employee ran “tor-browser-windows-x86_64-portable-15.0.14 /s” from the downloads folder. This triggered a silent installation of the Tor application.
 
 KQL statement used:
+```
 DeviceProcessEvents
 | where ProcessCommandLine contains "tor-browser-windows"
 | project Timestamp, DeviceName, ActionType, FileName, FolderPath, ProcessCommandLine, SHA256, Account = InitiatingProcessAccountName
 | where DeviceName == "brando-edr"
-
+```
 ---
 
 ### 3. Searched the `DeviceProcessEvents` Table for TOR Browser Execution
@@ -57,12 +58,13 @@ DeviceProcessEvents
 Searched the DeviceProcessEvents table for any indication that user “brandonlab” actually opened the Tor browser. There was evidence they opened the Tor application on May 26, 2026 1:35:31 PM. There were several other instances of firefox.exe (tor) as well as tor.exe spawned afterwards.
 
 KQL statement used:
+```
 DeviceProcessEvents
 | where DeviceName == "brando-edr"
 | where FileName has_any ("tor.exe", "firefox.exe", "tor-browser.exe")
 | project Timestamp, DeviceName, ActionType, FileName, FolderPath, ProcessCommandLine, SHA256, Account = InitiatingProcessAccountName
 | order by Timestamp desc
-
+```
 ---
 
 ### 4. Searched the `DeviceNetworkEvents` Table for TOR Network Connections
@@ -70,13 +72,14 @@ DeviceProcessEvents
 Searched the DeviceNetworkEvents table for any indication that the Tor browser was used to establish a connection using any of the known ports used by Tor. An employee on “brando-edr” device on May 26, 2026 1:36:17 PM successfully established a connection to report IP address 159.69.138.31 on port 9001. The connection was initiated by the process tor.exe located in c:\users\brandonlab\desktop\tor browser\browser\torbrowser\tor\tor.exe. There were a few other connections.
 
 KQL statement used:
+```
 DeviceNetworkEvents
 | where InitiatingProcessFileName in~ ("tor.exe", "firefox.exe")
 | where RemotePort in (9001, 9030, 9040, 9050, 9051, 9150)
 | project Timestamp, DeviceName, ActionType, InitiatingProcessAccountName, InitiatingProcessFileName, RemoteIP, RemotePort, RemoteUrl, InitiatingProcessFolderPath
 | where DeviceName == "brando-edr"
 | order by Timestamp desc
-
+```
 ---
 
 ## Chronological Event Timeline 
