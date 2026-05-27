@@ -38,6 +38,8 @@ DeviceFileEvents
 | project Timestamp, DeviceName, ActionType, FileName, FolderPath, SHA256, Account = InitiatingProcessAccountName
 | order by Timestamp desc
 ```
+<img width="1465" height="549" alt="image" src="https://github.com/user-attachments/assets/33f9743b-af33-4ed7-bc58-560073d4547b" />
+
 ---
 
 ### 2. Searched the `DeviceProcessEvents` Table
@@ -51,6 +53,8 @@ DeviceProcessEvents
 | project Timestamp, DeviceName, ActionType, FileName, FolderPath, ProcessCommandLine, SHA256, Account = InitiatingProcessAccountName
 | where DeviceName == "brando-edr"
 ```
+<img width="1363" height="178" alt="image" src="https://github.com/user-attachments/assets/c5276c05-18ed-4b66-9aad-b859f49735cb" />
+
 ---
 
 ### 3. Searched the `DeviceProcessEvents` Table for TOR Browser Execution
@@ -65,6 +69,8 @@ DeviceProcessEvents
 | project Timestamp, DeviceName, ActionType, FileName, FolderPath, ProcessCommandLine, SHA256, Account = InitiatingProcessAccountName
 | order by Timestamp desc
 ```
+<img width="1659" height="679" alt="image" src="https://github.com/user-attachments/assets/07a769aa-bf1e-4daa-911d-a0ec33faa661" />
+
 ---
 
 ### 4. Searched the `DeviceNetworkEvents` Table for TOR Network Connections
@@ -80,59 +86,93 @@ DeviceNetworkEvents
 | where DeviceName == "brando-edr"
 | order by Timestamp desc
 ```
+<img width="1621" height="634" alt="image" src="https://github.com/user-attachments/assets/88ba8223-3e53-4795-bf09-0c714f546876" />
+
 ---
 
 ## Chronological Event Timeline 
 
 ### 1. File Download – Tor Browser Installer
 Timestamp: Prior to May 26, 2026 1:33:47 PM PDT
+
 Event: User downloaded the Tor Browser installer to the local device.
+
 Device: brando-edr
+
 User: brandonlab
+
 File Path: C:\Users\brandonlab\Downloads\tor-browser-windows-x86_64-portable-15.0.14.exe
+
 File Name: tor-browser-windows-x86_64-portable-15.0.14.exe
 
 ### 2. Process Execution – Silent Tor Installation
 Timestamp: May 26, 2026 1:34:51 PM PDT
+
 Event: User executed the Tor Browser installer using silent installation arguments.
+
 Device: brando-edr
+
 User: brandonlab
+
 Process: tor-browser-windows-x86_64-portable-15.0.14.exe
+
 Process Command:
  tor-browser-windows-x86_64-portable-15.0.14.exe /s
+ 
 Execution Path: C:\Users\brandonlab\Downloads\tor-browser-windows-x86_64-portable-15.0.14.exe
 
 ### 3. Application Execution – Tor Browser Launch
 Timestamp: May 26, 2026 1:35:31 PM PDT
+
 Event: Tor Browser application and supporting Tor processes were launched on the endpoint.
+
 Device: brando-edr
+
 User: brandonlab
+
 Process: tor.exe
+
 Executable Path:
  C:\Users\brandonlab\Desktop\Tor Browser\Browser\TorBrowser\Tor\tor.exe
+ 
 Observed Command Line:
  "tor.exe" -f "C:\Users\brandonlab\Desktop\Tor Browser\Browser\TorBrowser\Data\Tor\torrc"
+ 
 Additional Activity: Multiple instances of tor.exe, firefox.exe, and tor-browser.exe were observed following execution.
 
 ### 4. Network Connection – Tor Relay Communication
 Timestamp: May 26, 2026 1:36:17 PM PDT
+
 Event: Tor process established outbound network communication to a known Tor relay node.
+
 Device: brando-edr
+
 User: brandonlab
+
 Initiating Process: tor.exe
+
 Process Path:
  C:\Users\brandonlab\Desktop\Tor Browser\Browser\TorBrowser\Tor\tor.exe
+ 
 Remote IP Address: 159.69.138.31
+
 Remote Port: 9001
+
 Protocol Purpose: Known Tor relay communication port.
+
 Additional Activity: Multiple additional Tor-related outbound connections were observed afterward.
 
 ### 5. File Creation – “tor-shopping-list.txt”
 Timestamp: May 26, 2026 1:38:21 PM PDT
+
 Event: A text file named tor-shopping-list.txt was created on the endpoint following Tor Browser activity.
+
 Device: brando-edr
+
 User: brandonlab
+
 File Name: tor-shopping-list.txt
+
 Associated Activity: File creation occurred after Tor installation, execution, and outbound Tor communications were established.
 
 
