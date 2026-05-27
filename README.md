@@ -30,13 +30,14 @@ Management suspects that some employees may be using TOR browsers to bypass netw
 Searched the DeviceFileEvents table for ANY file that had the string “tor” in it and discovered that it looks like the user downloaded and installed Tor . Did something that resulted in many Tor-related files being copied to the desktop and creation of a file called “tor-shopping-list.txt” on the desktop. These events began at: May 26, 2026 1:02:09 PM 
 
 KQL statement used:
+```
 DeviceFileEvents
 | where FileName contains "tor"
 | where InitiatingProcessAccountName == "brandonlab"
 | where DeviceName == "brando-edr"
 | project Timestamp, DeviceName, ActionType, FileName, FolderPath, SHA256, Account = InitiatingProcessAccountName
 | order by Timestamp desc
-
+```
 ---
 
 ### 2. Searched the `DeviceProcessEvents` Table
